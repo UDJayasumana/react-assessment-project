@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <Box
       sx={{
@@ -29,5 +29,3 @@ const Dashboard = () => {
     </Box>
   );
 };
-
-export default Dashboard;
