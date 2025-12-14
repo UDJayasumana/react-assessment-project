@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts, fetchProductById, updateProductById } from "./productThunks";
+import { fetchProducts, fetchProductById, updateProductById, patchProductById } from "./productThunks";
 
 const productSlice = createSlice({
     name: "products",
@@ -20,6 +20,12 @@ const productSlice = createSlice({
         updatedProduct: {},
         updatedProductLoading: false,
         updatedProductError: null,
+        //#endregion
+
+        //#region patched product
+        patchedProduct: {},
+        patchedProductLoading: false,
+        patchedProductError: null,
         //#endregion
 
     },
@@ -69,6 +75,22 @@ const productSlice = createSlice({
             state.updatedProductError = action.payload;
         })
         //#endregion
+    
+        //#region Patched single product by ID
+        .addCase(patchProductById.pending, (state) => {
+            state.patchedProductLoading = true;
+            state.patchedProductError = null;
+        })
+        .addCase(patchProductById.fulfilled, (state, action) => {
+            state.patchedProductLoading = false;
+            state.patchedProduct = action.payload;
+        })
+        .addCase(patchProductById.rejected, (state, action) => {
+            state.patchedProductLoading = false;
+            state.patchedProductError = action.payload;
+        })
+        //#endregion
+    
     }
 
 })

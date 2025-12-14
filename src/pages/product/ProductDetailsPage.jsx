@@ -15,7 +15,8 @@ export const ProductDetailsPage = () => {
     selectedProductError,
     productID,
     setProductID,
-    updateProductByID
+    updateProductByID,
+    patchProductByID,
   } = useProducts();
 
   useEffect(() => {
@@ -25,11 +26,14 @@ export const ProductDetailsPage = () => {
   }, [id, setProductID]);
 
   const onUpdateProduct = (data) => {
-    console.log('Update Data: ', productID);
-      updateProductByID(productID, data);
+    console.log("Update Data: ", productID);
+    updateProductByID(productID, data);
   };
 
-  const onPatchProduct = (data) => {};
+  const onPatchProduct = (data) => {
+    console.log("Patch Data: ", productID);
+    patchProductByID(productID, data);
+  };
 
   if (selectedProductLoading) return <h1>Loading...</h1>;
   if (selectedProductError)

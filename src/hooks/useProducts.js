@@ -4,6 +4,7 @@ import {
   fetchProducts,
   fetchProductById,
   updateProductById,
+  patchProductById,
 } from "../features/products";
 
 export const useProducts = () => {
@@ -19,6 +20,9 @@ export const useProducts = () => {
     updatedProduct,
     updatedProductLoading,
     updatedProductError,
+    patchedProduct,
+    patchedProductLoading,
+    patchedProductError,
   } = useSelector((state) => state.products);
 
   //#region productList state handling
@@ -84,6 +88,20 @@ export const useProducts = () => {
 
   //#endregion
 
+  //#region patched product
+
+  // Memoize patch action - this just creates the function, doesn't call it
+  const patchProductByID = useCallback(
+    (id, patchData) => {
+      if (id && patchData) {
+        return dispatch(patchProductById({ id: id, ...patchData }));
+      }
+    },
+    [dispatch]
+  );
+
+  //#endregion
+
   return {
     list,
     listLoading,
@@ -101,5 +119,9 @@ export const useProducts = () => {
     updatedProductLoading,
     updatedProductError,
     updateProductByID,
+    patchedProduct,
+    patchedProductLoading,
+    patchedProductError,
+    patchProductByID,
   };
 };
