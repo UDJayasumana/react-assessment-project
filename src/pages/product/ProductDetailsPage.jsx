@@ -1,17 +1,42 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BackNavPanel } from '@/components/main/BackNavPanel';
+import { BackNavPanel } from "@/components/main/BackNavPanel";
 import { ProductDetailCard } from "../../components/products/ProductDetailCard";
+import { useProducts } from "@/hooks/useProducts";
 
 export const ProductDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const onUpdateProduct = (data) => {};
+  const {
+    selectedProduct,
+    selectedProductLoading,
+    selectedProductError,
+    productID,
+    setProductID,
+    
+  } = useProducts();
 
-  const onPatchProduct = (data) => {};
+  useEffect(() => {
+    if (id) {
+      setProductID(id);
+    }
+  }, [id, setProductID]);
 
+  const onUpdateProduct = (data) => {
+    
+  };
+
+  const onPatchProduct = (data) => {
+    
+  };
+
+  if (selectedProductLoading) return <h1>Loading...</h1>;
+  if (selectedProductError)
+    return <h1>Error: {selectedProductError.message}</h1>;
+  if (!selectedProduct || selectedProduct.length === 0)
+    return <h1>No products found</h1>;
 
   return (
     <Box
@@ -23,22 +48,32 @@ export const ProductDetailsPage = () => {
         height: "100%",
       }}
     >
-        <BackNavPanel onBackClick={() => navigate(-1)} />
+      <BackNavPanel onBackClick={() => navigate(-1)} />
 
-        {/* Main Product Card Showing Area */}
-        <Box sx={{
-                display:'flex',
-                justifyContent: 'center',
-                alignItems: 'center', 
-                height: '94%',
-                flex: 1,
-                minHeight: 0, 
-                overflow: 'auto',
-                background: '#E3E2DC'
-            }}>
-              <ProductDetailCard />
-        </Box>
-
+      {/* Main Product Card Showing Area */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "94%",
+          flex: 1,
+          minHeight: 0,
+          overflow: "auto",
+          background: "#E3E2DC",
+        }}
+      >
+        {selectedProduct?.data && (
+          <ProductDetailCard productName={selectedProduct.data.name}
+                             price={selectedProduct.data.price} 
+                             description={selectedProduct.data.description}
+                             initialStock={selectedProduct.data.stock}
+                             initialStatus={selectedProduct.data.status === 'ACTIVE' ? true : false}
+                             onUpdateProduct={onUpdateProduct}
+                             onPatchProduct={onPatchProduct}/>
+        )}
+        
+      </Box>
     </Box>
   );
 };
