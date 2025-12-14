@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BackNavPanel } from '@/components/main/BackNavPanel';
+import { ProductDetailCard } from "../../components/products/ProductDetailCard";
 
 export const ProductDetailsPage = () => {
   const { id } = useParams();
@@ -35,7 +36,7 @@ export const ProductDetailsPage = () => {
                 overflow: 'auto',
                 background: '#E3E2DC'
             }}>
-              
+              <ProductDetailCard />
         </Box>
 
     </Box>
