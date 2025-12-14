@@ -2,7 +2,7 @@ import { Box, Toolbar } from "@mui/material";
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "@/components/main/Sidebar";
-import { AddCircleOutlineOutlined, SubjectOutlined } from "@mui/icons-material";
+import { AddCircleOutlineOutlined, AddCircleOutlineRounded, SubjectOutlined } from "@mui/icons-material";
 import Navbar from "@/components/main/Navbar";
 
 const sidebarWidth = 240;
@@ -20,6 +20,11 @@ const MainLayout = () => {
         text: 'Products',
         icon: <AddCircleOutlineOutlined color='secondary' />,
         path: '/products'
+    },
+    {
+      text: 'Orders',
+      icon: <AddCircleOutlineRounded color='primary' />,
+      path: '/orders'
     }
   ];
 
