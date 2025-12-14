@@ -1,13 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../features/products";
+import {
+  fetchProducts,
+  fetchProductById,
+  updateProductById,
+  patchProductById,
+} from "../features/products";
 
 export const useProducts = () => {
   const dispatch = useDispatch();
 
-  const { list, listLoading, listError } = useSelector(
-    (state) => state.products
-  );
+  const {
+    list,
+    listLoading,
+    listError,
+    selectedProduct,
+    selectedProductLoading,
+    selectedProductError,
+    updatedProduct,
+    updatedProductLoading,
+    updatedProductError,
+    patchedProduct,
+    patchedProductLoading,
+    patchedProductError,
+  } = useSelector((state) => state.products);
 
   //#region productList state handling
 
@@ -44,7 +60,49 @@ export const useProducts = () => {
 
   //#endregion
 
-  return{
+  //#region selected product
+  const [productID, setProductID] = useState(null);
+  //Memorize actions
+  const getProductByID = useCallback(
+    (id) => id && dispatch(fetchProductById(id)),
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getProductByID(productID);
+  }, [productID, getProductByID]);
+
+  //#endregion
+
+  //#region updated product
+
+  // Memoize update action - this just creates the function, doesn't call it
+  const updateProductByID = useCallback(
+    (id, updateData) => {
+      if (id && updateData) {
+        return dispatch(updateProductById({ id: id, ...updateData }));
+      }
+    },
+    [dispatch]
+  );
+
+  //#endregion
+
+  //#region patched product
+
+  // Memoize patch action - this just creates the function, doesn't call it
+  const patchProductByID = useCallback(
+    (id, patchData) => {
+      if (id && patchData) {
+        return dispatch(patchProductById({ id: id, ...patchData }));
+      }
+    },
+    [dispatch]
+  );
+
+  //#endregion
+
+  return {
     list,
     listLoading,
     listError,
@@ -52,6 +110,18 @@ export const useProducts = () => {
     setPaginationModel,
     getAllProducts,
     setProductUserFilters,
-  }
-
+    selectedProduct,
+    selectedProductLoading,
+    selectedProductError,
+    productID,
+    setProductID,
+    updatedProduct,
+    updatedProductLoading,
+    updatedProductError,
+    updateProductByID,
+    patchedProduct,
+    patchedProductLoading,
+    patchedProductError,
+    patchProductByID,
+  };
 };
