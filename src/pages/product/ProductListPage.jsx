@@ -10,6 +10,7 @@ import {
   PRODUCT_MIN_PRICE,
 } from "@/constants/products";
 import FilterPanel from "../../components/main/FilterPanel";
+import {ProductListGrid} from "@/components/products/ProductListGrid";
 
 export const ProductListPage = () => {
   const theme = useTheme();
@@ -79,7 +80,7 @@ export const ProductListPage = () => {
   return (
     <Box
       sx={{
-        background: "#6267CC",
+        // background: "#6267CC",
         display: "flex",
         flexDirection: "column",
       }}
@@ -182,6 +183,16 @@ export const ProductListPage = () => {
           </Box>
         </FilterPanel>
       </Box>
+
+      <Box sx={{
+        background: '#656935',
+        width: '100%',
+        flex: 1 
+      }}>
+        <ProductListGrid ref={productListRef} />
+      </Box>
+
+
     </Box>
   );
 };
