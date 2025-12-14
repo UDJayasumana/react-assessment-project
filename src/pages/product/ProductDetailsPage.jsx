@@ -1,0 +1,29 @@
+import { Box } from "@mui/material";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { BackNavPanel } from '@/components/main/BackNavPanel';
+
+export const ProductDetailsPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const onUpdateProduct = (data) => {};
+
+  const onPatchProduct = (data) => {};
+
+
+  return (
+    <Box
+      component="main"
+      sx={{
+        background: "#D6CEC3",
+        flex: 1,
+        width: "100%",
+        height: "100%",
+      }}
+    >
+        <BackNavPanel onBackClick={() => navigate(-1)} />
+
+    </Box>
+  );
+};

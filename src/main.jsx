@@ -4,10 +4,11 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout.jsx";
 import { Dashboard } from "@/pages/dashboard/Dashboard";
+import { ProductListPage, ProductDetailsPage } from "@/pages/product";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { store } from "@/store/store.js";
 import { Provider } from "react-redux";
-import { ProductListPage } from "./pages/product";
+
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Dashboard /> },
       { path: "/products", element: <ProductListPage /> },
+      {path: '/products/:id', element: <ProductDetailsPage /> }
     ],
   },
 ]);
