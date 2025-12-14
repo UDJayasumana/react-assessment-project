@@ -14,3 +14,18 @@ export const fetchProducts = createAsyncThunk(
         }
     }
     );
+
+    export const fetchProductById = createAsyncThunk(
+        'products/fetchProductById',
+        async (id, { rejectWithValue }) => {
+            try{
+                const response = await ProductService.getById(id);
+                return response.data;
+            }catch(err){
+                return rejectWithValue({
+                    message: err.message,
+                    id: id // Include the ID in error for reference
+                })
+            }
+        }
+    );

@@ -1,18 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "./productThunks";
+import { fetchProducts, fetchProductById } from "./productThunks";
 
 const productSlice = createSlice({
     name: "products",
     initialState: {
-        //product list
+       //#region product list
         list: {},
         listLoading: false,
         listError: null,
+       //#endregion
+
+        //#region selected product
+        selectedProduct: {},
+        selectedProductLoading: false,
+        selectedProductError: null,
+        //#endregion
 
     },
     extraReducers:(builder) =>{
         builder
-        // Fetch all products
+        //#region Fetch all products
         .addCase(fetchProducts.pending, (state) => {
             state.listLoading = true;
             state.listError = null;
@@ -25,6 +32,22 @@ const productSlice = createSlice({
             state.listLoading = false;
             state.listError = action.payload;
         })
+        //#endregion
+
+        //#region Fetch single product by ID
+        .addCase(fetchProductById.pending, (state) => {
+            state.selectedProductLoading = true;
+            state.selectedProductError = null;
+        })
+        .addCase(fetchProductById.fulfilled, (state, action) => {
+            state.selectedProductLoading = false;
+            state.selectedProduct = action.payload;
+        })
+        .addCase(fetchProductById.rejected, (state, action) => {
+            state.selectedProductLoading = false;
+            state.selectedProductError = action.payload;
+        })
+        //#endregion
     }
 
 })

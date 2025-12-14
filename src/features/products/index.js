@@ -1,2 +1,2 @@
-export { fetchProducts } from './productThunks';
+export { fetchProducts, fetchProductById } from './productThunks';
 export { default as productsReducer } from './productSlice';
