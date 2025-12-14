@@ -24,6 +24,20 @@ export const ProductDetailsPage = () => {
     >
         <BackNavPanel onBackClick={() => navigate(-1)} />
 
+        {/* Main Product Card Showing Area */}
+        <Box sx={{
+                display:'flex',
+                justifyContent: 'center',
+                alignItems: 'center', 
+                height: '94%',
+                flex: 1,
+                minHeight: 0, 
+                overflow: 'auto',
+                background: '#E3E2DC'
+            }}>
+              
+        </Box>
+
     </Box>
   );
 };
