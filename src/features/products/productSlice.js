@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts, fetchProductById } from "./productThunks";
+import { fetchProducts, fetchProductById, updateProductById } from "./productThunks";
 
 const productSlice = createSlice({
     name: "products",
@@ -14,6 +14,12 @@ const productSlice = createSlice({
         selectedProduct: {},
         selectedProductLoading: false,
         selectedProductError: null,
+        //#endregion
+
+        //#region updated product
+        updatedProduct: {},
+        updatedProductLoading: false,
+        updatedProductError: null,
         //#endregion
 
     },
@@ -46,6 +52,21 @@ const productSlice = createSlice({
         .addCase(fetchProductById.rejected, (state, action) => {
             state.selectedProductLoading = false;
             state.selectedProductError = action.payload;
+        })
+        //#endregion
+
+        //#region Update single product by ID
+        .addCase(updateProductById.pending, (state) => {
+            state.updatedProductLoading = true;
+            state.updatedProductError = null;
+        })
+        .addCase(updateProductById.fulfilled, (state, action) => {
+            state.updatedProductLoading = false;
+            state.updatedProduct = action.payload;
+        })
+        .addCase(updateProductById.rejected, (state, action) => {
+            state.updatedProductLoading = false;
+            state.updatedProductError = action.payload;
         })
         //#endregion
     }

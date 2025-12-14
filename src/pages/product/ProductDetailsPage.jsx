@@ -15,7 +15,7 @@ export const ProductDetailsPage = () => {
     selectedProductError,
     productID,
     setProductID,
-    
+    updateProductByID
   } = useProducts();
 
   useEffect(() => {
@@ -25,12 +25,11 @@ export const ProductDetailsPage = () => {
   }, [id, setProductID]);
 
   const onUpdateProduct = (data) => {
-    
+    console.log('Update Data: ', productID);
+      updateProductByID(productID, data);
   };
 
-  const onPatchProduct = (data) => {
-    
-  };
+  const onPatchProduct = (data) => {};
 
   if (selectedProductLoading) return <h1>Loading...</h1>;
   if (selectedProductError)
@@ -64,15 +63,18 @@ export const ProductDetailsPage = () => {
         }}
       >
         {selectedProduct?.data && (
-          <ProductDetailCard productName={selectedProduct.data.name}
-                             price={selectedProduct.data.price} 
-                             description={selectedProduct.data.description}
-                             initialStock={selectedProduct.data.stock}
-                             initialStatus={selectedProduct.data.status === 'ACTIVE' ? true : false}
-                             onUpdateProduct={onUpdateProduct}
-                             onPatchProduct={onPatchProduct}/>
+          <ProductDetailCard
+            productName={selectedProduct.data.name}
+            price={selectedProduct.data.price}
+            description={selectedProduct.data.description}
+            initialStock={selectedProduct.data.stock}
+            initialStatus={
+              selectedProduct.data.status === "ACTIVE" ? true : false
+            }
+            onUpdateProduct={onUpdateProduct}
+            onPatchProduct={onPatchProduct}
+          />
         )}
-        
       </Box>
     </Box>
   );

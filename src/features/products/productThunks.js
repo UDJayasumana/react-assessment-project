@@ -29,3 +29,18 @@ export const fetchProducts = createAsyncThunk(
             }
         }
     );
+
+    export const updateProductById = createAsyncThunk(
+        'products/updateProductById',
+        async ({ id, ...data }, { rejectWithValue }) => {
+            try{
+                const response = await ProductService.updateById(id, data);
+                return response.data;
+            }catch(err){
+                return rejectWithValue({
+                    message: err.message,
+                    id: id // Include the ID in error for reference
+                })
+            }
+        }
+    );

@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, fetchProductById } from "../features/products";
+import {
+  fetchProducts,
+  fetchProductById,
+  updateProductById,
+} from "../features/products";
 
 export const useProducts = () => {
   const dispatch = useDispatch();
@@ -12,6 +16,9 @@ export const useProducts = () => {
     selectedProduct,
     selectedProductLoading,
     selectedProductError,
+    updatedProduct,
+    updatedProductLoading,
+    updatedProductError,
   } = useSelector((state) => state.products);
 
   //#region productList state handling
@@ -63,6 +70,20 @@ export const useProducts = () => {
 
   //#endregion
 
+  //#region updated product
+
+  // Memoize update action - this just creates the function, doesn't call it
+  const updateProductByID = useCallback(
+    (id, updateData) => {
+      if (id && updateData) {
+        return dispatch(updateProductById({ id: id, ...updateData }));
+      }
+    },
+    [dispatch]
+  );
+
+  //#endregion
+
   return {
     list,
     listLoading,
@@ -76,5 +97,9 @@ export const useProducts = () => {
     selectedProductError,
     productID,
     setProductID,
+    updatedProduct,
+    updatedProductLoading,
+    updatedProductError,
+    updateProductByID,
   };
 };
