@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
@@ -26,6 +26,8 @@ export const ProductDetailCard = ({
   fallbackCardImgUrl = "",
 }) => {
   const theme = useTheme();
+
+  const [isSubmitBtnDisable, setIsSubmitBtnDisable] = useState(true);
 
   const {
     control,
@@ -48,6 +50,29 @@ export const ProductDetailCard = ({
     status: initialStatus,
   });
 
+  //Memorize our action
+  const getActionMode = useCallback(() => {
+    let curAction = null;
+
+    if (
+      fieldsInitialState.stock == stock &&
+      fieldsInitialState.status == status
+    )
+      curAction = null;
+    else if (
+      fieldsInitialState.stock != stock &&
+      fieldsInitialState.status != status
+    )
+      curAction = "PUT";
+    else if (
+      fieldsInitialState.stock !== stock ||
+      fieldsInitialState.status !== status
+    )
+      curAction = "PATCH";
+
+    return curAction;
+  }, [fieldsInitialState, stock, status]);
+
   // Reset form when props change
   useEffect(() => {
     reset({
@@ -56,24 +81,20 @@ export const ProductDetailCard = ({
     });
   }, [initialStock, initialStatus, reset]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsSubmitBtnDisable(getActionMode() === null);
+    }, 0);
+  }, [stock, status, fieldsInitialState]);
+
   const onSubmit = (data) => {
-    //If both form current statuses != to heir prev statuses then all 2 fields are changed
-    if (
-      fieldsInitialState.stock != stock &&
-      fieldsInitialState.status != status
-    ) {
-      console.log("Do PUT : ", fieldsInitialState);
+    if (getActionMode() === "PUT")
       onUpdateProduct({ stock: stock, status: status ? "ACTIVE" : "INACTIVE" });
-    } else if (
-      fieldsInitialState.stock != stock ||
-      fieldsInitialState.status != status
-    ) {
+    else if (getActionMode() === "PATCH") {
       if (fieldsInitialState.stock != stock) onPatchProduct({ stock: stock });
       if (fieldsInitialState.status != status)
         onPatchProduct({ status: status ? "ACTIVE" : "INACTIVE" });
-      console.log("Do PATCH :  ", fieldsInitialState.status);
     }
-    setFieldsInitialState({ stock: stock, status: status });
   };
 
   return (
@@ -235,6 +256,7 @@ export const ProductDetailCard = ({
               variant="contained"
               color="secondary"
               sx={{ height: 40, width: 150 }}
+              disabled={isSubmitBtnDisable}
             >
               Submit
             </Button>

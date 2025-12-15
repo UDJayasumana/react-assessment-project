@@ -1,13 +1,41 @@
 import { Box } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BackNavPanel } from "@/components/main/BackNavPanel";
+import { ConfirmDialog } from "@/components/dialogbox/ConfirmDialog";
 import { ProductDetailCard } from "../../components/products/ProductDetailCard";
 import { useProducts } from "@/hooks/useProducts";
+import { useDispatch } from "react-redux";
+import {
+  resetPatchedProduct,
+  resetUpdatedProduct,
+} from "../../features/products/productSlice";
 
 export const ProductDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogData, setDialogData] = useState({
+    title: "Untitled",
+    message: "Are you sure?",
+    confirmBtnLabel: "OK",
+    cancelBtnLabel: "Cancel",
+    action: "PUT",
+    data: {},
+  });
+
+  const handleDialog = () => {
+    if (dialogData.action === "PUT") {
+      updateProductByID(productID, dialogData.data);
+    }
+    if (dialogData.action === "PATCH") {
+      patchProductByID(productID, dialogData.data);
+    }
+    setOpenDialog(false);
+  };
 
   const {
     selectedProduct,
@@ -18,7 +46,7 @@ export const ProductDetailsPage = () => {
     updateProductByID,
     updatedProduct,
     patchProductByID,
-    patchedProduct
+    patchedProduct,
   } = useProducts();
 
   useEffect(() => {
@@ -27,24 +55,39 @@ export const ProductDetailsPage = () => {
     }
   }, [id, setProductID]);
 
-  useEffect(()=>{
-    if(updatedProduct.success || patchedProduct.success)
-    {
+  useEffect(() => {
+    if (updatedProduct.success || patchedProduct.success) {
       setTimeout(() => {
         navigate(-1);
-      }, 500);
+      }, 1000);
+
+      if (updatedProduct.success) dispatch(resetUpdatedProduct());
+      if (patchedProduct.success) dispatch(resetPatchedProduct());
     }
-      
-  }, [updatedProduct, patchedProduct])
+  }, [updatedProduct, patchedProduct]);
 
   const onUpdateProduct = (data) => {
-    console.log("Update Data: ", productID);
-    updateProductByID(productID, data);
+    setDialogData({
+      title: "Update Product",
+      message: "Are you sure you want to update this entire product?",
+      confirmBtnLabel: "Yes",
+      cancelBtnLabel: "Cancel",
+      action: "PUT",
+      data,
+    });
+    setOpenDialog(true);
   };
 
   const onPatchProduct = (data) => {
-    console.log("Patch Data: ", productID);
-    patchProductByID(productID, data);
+    setDialogData({
+      title: "Update Field",
+      message: "Are you sure you want to update only one field?",
+      confirmBtnLabel: "Yes",
+      cancelBtnLabel: "Cancel",
+      action: "PATCH",
+      data,
+    });
+    setOpenDialog(true);
   };
 
   if (selectedProductLoading) return <h1>Loading...</h1>;
@@ -93,6 +136,16 @@ export const ProductDetailsPage = () => {
           />
         )}
       </Box>
+
+      <ConfirmDialog
+        open={openDialog}
+        title={dialogData.title}
+        message={dialogData.message}
+        onClose={() => setOpenDialog(false)}
+        onConfirm={handleDialog}
+        confirmText={dialogData.confirmBtnLabel}
+        cancelText={dialogData.cancelBtnLabel}
+      />
     </Box>
   );
 };
