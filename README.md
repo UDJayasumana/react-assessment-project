@@ -73,7 +73,6 @@ Both must be set up and executed separately.
    npm run dev
    ```
 
-   *(Command may vary depending on the back-end setup)*
 
 4. Ensure the back-end server is running successfully before starting the front-end.
 
