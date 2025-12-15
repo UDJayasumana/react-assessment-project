@@ -8,6 +8,7 @@ import { ProductListPage, ProductDetailsPage } from "@/pages/product";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { store } from "@/store/store.js";
 import { Provider } from "react-redux";
+import { OrderListPage } from "./pages/order/OrderListPage";
 
 
 
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Dashboard /> },
       { path: "/products", element: <ProductListPage /> },
-      {path: '/products/:id', element: <ProductDetailsPage /> }
+      {path: '/products/:id', element: <ProductDetailsPage /> },
+      { path: "/orders", element: <OrderListPage /> },
     ],
   },
 ]);
