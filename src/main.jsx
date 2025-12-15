@@ -7,6 +7,8 @@ import MainLayout from "@/layouts/MainLayout.jsx";
 import { Dashboard } from "@/pages/dashboard/Dashboard";
 import { ProductListPage, ProductDetailsPage } from "@/pages/product";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { ThemeContextProvider } from "@/context/ThemeContext";
+
 import { store } from "@/store/store.js";
 import { Provider } from "react-redux";
 import { OrderListPage } from "./pages/order/OrderListPage";
@@ -25,17 +27,16 @@ const router = createBrowserRouter([
   },
 ]);
 
-const theme = createTheme();
+// const theme = createTheme();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <ToastProvider>
-          <CssBaseline />
           <RouterProvider router={router} />
         </ToastProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </Provider>
   </StrictMode>
 );
