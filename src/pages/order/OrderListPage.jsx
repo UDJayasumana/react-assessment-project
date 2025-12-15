@@ -1,5 +1,5 @@
 import { Box, MenuItem, Select, TextField, Typography, useTheme } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
     filterTextField,
     filterCommonFields,
@@ -11,11 +11,54 @@ import { OrderListTable } from '../../components/orders/OrderListTable';
 export const OrderListPage = () => {
 
     const theme = useTheme();
+    const orderListRef = useRef();
 
       // Filter ui hooks
       const [productName, setProductName] = useState("");
       const [orderStatus, setOrderStatus] = useState("all");
       const [reseted, setReseted] = useState(false);
+
+      //Memorize ui value recieving function
+        const getFilters = useCallback(() => {
+          const filters = {};
+          if (productName.trim().length != 0) filters["product"] = productName;
+          if (
+            orderStatus.trim().length != 0 &&
+            orderStatus !== ORDER_STATUSES[0].value
+          )
+            filters["status"] = orderStatus;
+      
+          return filters;
+        }, [productName, orderStatus]);
+
+        //Memorize filter submit 
+        const onSubmit = useCallback(
+            (values) => {
+              if (orderListRef.current) {
+                orderListRef.current.updateOrdersList(getFilters());
+              }
+            },
+            [productName, orderStatus, getFilters]
+          );
+
+          //Memorize filter reset 
+            const onReset = useCallback(() => {
+              setProductName("");
+              setOrderStatus("all");
+              setReseted(true);
+              orderListRef.current.updateOrdersList();
+            }, []);
+
+            //Trigger filter resets
+              useEffect(() => {
+                if (reseted) {
+                  const data = {
+                    product: productName,
+                    status: orderStatus
+                  };
+                  onSubmit(data);
+                }
+              }, [reseted]);
 
   return (
     <Box
@@ -39,7 +82,7 @@ export const OrderListPage = () => {
         }}
       >
 
-        <FilterPanel>
+        <FilterPanel onSubmit={onSubmit} onReset={onReset}>
 
           {/* Product Name */}
           <Box
@@ -57,7 +100,7 @@ export const OrderListPage = () => {
               value={productName}
               sx={{ ...filterTextField(), ...filterCommonFields(theme) }}
               placeholder="Enter Product Name..."
-              name="name"
+              name="product"
               required
               onChange={(e) => {
                 setProductName(e.target.value);
@@ -105,7 +148,7 @@ export const OrderListPage = () => {
         width: '100%',
         flex: 1 
       }}>
-         <OrderListTable />
+         <OrderListTable ref={orderListRef} />
       </Box>
 
     </Box>
