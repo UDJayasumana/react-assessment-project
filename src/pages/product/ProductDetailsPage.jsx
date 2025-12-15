@@ -16,7 +16,9 @@ export const ProductDetailsPage = () => {
     productID,
     setProductID,
     updateProductByID,
+    updatedProduct,
     patchProductByID,
+    patchedProduct
   } = useProducts();
 
   useEffect(() => {
@@ -24,6 +26,16 @@ export const ProductDetailsPage = () => {
       setProductID(id);
     }
   }, [id, setProductID]);
+
+  useEffect(()=>{
+    if(updatedProduct.success || patchedProduct.success)
+    {
+      setTimeout(() => {
+        navigate(-1);
+      }, 500);
+    }
+      
+  }, [updatedProduct, patchedProduct])
 
   const onUpdateProduct = (data) => {
     console.log("Update Data: ", productID);
