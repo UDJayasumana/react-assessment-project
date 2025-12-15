@@ -12,11 +12,6 @@ const MainLayout = () => {
 
   const menuItems = [
     {
-      text: "Dashboard",
-      icon: <SubjectOutlined color="secondary" />,
-      path: "/",
-    },
-    {
         text: 'Products',
         icon: <AddCircleOutlineOutlined color='secondary' />,
         path: '/products'
