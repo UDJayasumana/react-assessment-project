@@ -1,31 +1,41 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 export const Dashboard = () => {
   return (
     <Box
       sx={{
-        background: "#6267CC",
+        backgroundImage: `url("/images/dashboard/dashboard.png")`,
         width: "100%",
         height: "100%",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
-<Box sx={{
-         background: '#50A391',
-         width: '100%',
-         height: '100%',
-         display: 'flex',
-         flexWrap: 'wrap',
-         alignContent: 'flex-start',
-         p: 5,
-         gap: '20px',
-         
-        }}>
-
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          p: 5,
+          gap: "20px",
           
-        </Box>
-
-
+        }}
+      >
+        <Typography
+          variant="h2"
+          gutterBottom
+          sx={{
+            padding: 2,
+            fontFamily: '"Poppins", sans-serif',
+            fontWeight: 600,
+          }}
+        >
+          Dashboard
+        </Typography>
+      </Box>
     </Box>
   );
 };
