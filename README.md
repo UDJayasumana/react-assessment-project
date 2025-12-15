@@ -62,7 +62,7 @@ Both must be set up and executed separately.
 
 1. Download the back-end application from the following URL:
 
-   > **Back-End Repository URL:** *[Provide URL Here]*
+   > **Back-End Repository URL:** *https://github.com/UDJayasumana/nodejs-assessment-back-end*
 
 2. Open the back-end project in **Visual Studio Code**.
 
