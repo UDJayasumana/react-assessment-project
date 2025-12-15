@@ -57,7 +57,7 @@ export const ProductDetailsPage = () => {
     <Box
       component="main"
       sx={{
-        background: "#D6CEC3",
+        // background: "#D6CEC3",
         flex: 1,
         width: "100%",
         height: "100%",
@@ -75,7 +75,7 @@ export const ProductDetailsPage = () => {
           flex: 1,
           minHeight: 0,
           overflow: "auto",
-          background: "#E3E2DC",
+          // background: "#E3E2DC",
         }}
       >
         {selectedProduct?.data && (

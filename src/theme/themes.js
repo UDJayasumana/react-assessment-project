@@ -9,6 +9,9 @@ export const lightTheme = createTheme({
     secondary: {
       main: "#9c27b0",
     },
+    third:{
+      light: '#A4D5EB'
+    },
     background: {
       default: "#f5f5f5",
       paper: "#ffffff",
@@ -24,6 +27,9 @@ export const darkTheme = createTheme({
     },
     secondary: {
       main: "#ce93d8",
+    },
+    third:{
+      light: '#474646'
     },
     background: {
       default: "#121212",
