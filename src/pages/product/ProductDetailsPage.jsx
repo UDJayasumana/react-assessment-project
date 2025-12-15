@@ -77,6 +77,7 @@ export const ProductDetailsPage = () => {
             }
             onUpdateProduct={onUpdateProduct}
             onPatchProduct={onPatchProduct}
+            fallbackCardImgUrl={selectedProduct.data.imageUrl}
           />
         )}
       </Box>
