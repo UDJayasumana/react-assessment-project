@@ -12,7 +12,7 @@ const Sidebar = ({ width, menuItems, onClickItem }) => {
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: width,
-          backgroundColor: "#EBEDDA",
+          backgroundColor: theme.primary,
           mt: `${theme.mixins.toolbar.minHeight}px`,
         },
       }}
@@ -21,7 +21,7 @@ const Sidebar = ({ width, menuItems, onClickItem }) => {
     >
       <Box>
         <Typography
-          variant="h4"
+          variant="h5"
           gutterBottom
           sx={{
             padding: 2,
@@ -29,7 +29,7 @@ const Sidebar = ({ width, menuItems, onClickItem }) => {
             fontWeight: 600,
           }}
         >
-          Courier Flex
+          Side Bar
         </Typography>
 
         <List>
@@ -40,7 +40,7 @@ const Sidebar = ({ width, menuItems, onClickItem }) => {
                 <ListItemButton
                   onClick={() => onClickItem(item.path)}
                   sx={{
-                    background: isActive ? "#f4f4f4" : null,
+                    background: isActive ? theme.palette.primary.light : "transparent",
                     "&:hover": { background: isActive ? "#f4f4f4" : null },
                   }}
                 >
