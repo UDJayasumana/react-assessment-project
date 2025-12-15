@@ -91,11 +91,7 @@ Both must be set up and executed separately.
    npm start
    ```
 
-4. The application will be available in your browser at:
-
-   ```
-   http://localhost:3000
-   ```
+4. Then VSCode terminal popup the app localhost url for you.
 
 ---
 
