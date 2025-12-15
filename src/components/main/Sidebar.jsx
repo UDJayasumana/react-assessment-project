@@ -40,7 +40,7 @@ const Sidebar = ({ width, menuItems, onClickItem }) => {
                 <ListItemButton
                   onClick={() => onClickItem(item.path)}
                   sx={{
-                    background: isActive ? "#f4f4f4" : null,
+                    background: isActive ? theme.palette.primary.light : "transparent",
                     "&:hover": { background: isActive ? "#f4f4f4" : null },
                   }}
                 >
